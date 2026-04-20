@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CAMP Community College — EMS Program Student Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy: #0a1628;
+  --navy2: #0f2040;
+  --navy3: #162d58;
+  --orange: #e85d04;
+  --orange2: #f77f00;
+  --gold: #ffb703;
+  --silver: #94a3b8;
+  --white: #f8fafc;
+  --muted: #cbd5e1;
+  --card: #111e36;
+  --card2: #1a2d4d;
+  --success: #22c55e;
+  --warn: #f59e0b;
+  --red: #ef4444;
+  --border: rgba(148,163,184,0.15);
+  --radius: 10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--navy);color:var(--white);font-family:'Source Sans 3',sans-serif;min-height:100vh;line-height:1.6;}
+
+/* ── HEADER ─────────────────────────────── */
+.site-header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 50%,#1a2040 100%);border-bottom:3px solid var(--orange);padding:0;position:sticky;top:0;z-index:200;box-shadow:0 4px 24px rgba(0,0,0,0.5);}
+.header-inner{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;}
+.logo-wrap{display:flex;align-items:center;gap:12px;flex-shrink:0;flex:1;min-width:0;}
+.logo-emblem{width:52px;height:52px;flex-shrink:0;}
+.logo-emblem svg{width:100%;height:100%;}
+.logo-text{line-height:1.1;min-width:0;}
+.logo-text .college{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.logo-text .program{font-size:10px;letter-spacing:1.5px;color:var(--silver);text-transform:uppercase;}
+.logo-text .tagline{font-size:9px;color:var(--orange2);letter-spacing:1px;margin-top:2px;}
+.header-badge{display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;}
+.badge{background:rgba(232,93,4,0.15);border:1px solid var(--orange);color:var(--orange2);font-size:9px;letter-spacing:1px;padding:3px 8px;border-radius:20px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;white-space:nowrap;}
+.badge.gold{background:rgba(255,183,3,0.12);border-color:var(--gold);color:var(--gold);}
+
+/* ── HAMBURGER ───────────────────────────── */
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:1px solid var(--border);border-radius:6px;padding:8px 10px;cursor:pointer;flex-shrink:0;}
+.hamburger span{display:block;width:20px;height:2px;background:var(--white);border-radius:2px;transition:all 0.3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* ── NAV DESKTOP ─────────────────────────── */
+.tab-nav{background:var(--navy2);border-bottom:1px solid var(--border);}
+.tab-nav-inner{max-width:1200px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;}
+.tab-nav-inner::-webkit-scrollbar{display:none;}
+.tab-btn{background:none;border:none;color:var(--silver);font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:13px 18px;cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
+.tab-btn:hover{color:var(--white);background:rgba(255,255,255,0.04);}
+.tab-btn.active{color:var(--orange2);border-bottom-color:var(--orange);}
+.tab-btn .lock-icon{font-size:11px;margin-left:4px;opacity:0.7;}
+
+/* ── MOBILE DRAWER NAV ───────────────────── */
+.mobile-nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:190;opacity:0;transition:opacity 0.3s;}
+.mobile-nav-overlay.open{opacity:1;}
+.mobile-nav-drawer{position:fixed;top:0;left:-100%;width:min(300px,85vw);height:100vh;background:var(--navy2);border-right:1px solid var(--border);z-index:195;transition:left 0.3s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;overflow:hidden;}
+.mobile-nav-drawer.open{left:0;}
+.mobile-nav-header{padding:20px 20px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--navy);}
+.mobile-nav-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--gold);}
+.mobile-nav-close{background:none;border:none;color:var(--silver);font-size:24px;cursor:pointer;line-height:1;padding:0;}
+.mobile-nav-close:hover{color:var(--white);}
+.mobile-nav-links{flex:1;overflow-y:auto;padding:12px 0;}
+.mobile-tab-btn{width:100%;background:none;border:none;border-left:3px solid transparent;color:var(--silver);font-family:'Source Sans 3',sans-serif;font-size:14px;font-weight:600;text-align:left;padding:14px 20px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:12px;}
+.mobile-tab-btn:hover{background:rgba(255,255,255,0.04);color:var(--white);}
+.mobile-tab-btn.active{border-left-color:var(--orange);color:var(--orange2);background:rgba(232,93,4,0.07);}
+.mobile-tab-btn .tab-emoji{font-size:18px;width:24px;text-align:center;flex-shrink:0;}
+.mobile-nav-footer{padding:16px 20px;border-top:1px solid var(--border);}
+.mobile-nav-badges{display:flex;flex-direction:column;gap:6px;}
+.mobile-badge{font-size:10px;color:var(--silver);letter-spacing:1px;}
+
+/* ── MAIN ────────────────────────────────── */
+.main{max-width:1200px;margin:0 auto;padding:32px 24px;}
+.tab-panel{display:none;animation:fadeIn 0.3s ease;}
+.tab-panel.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION HEADINGS ────────────────────── */
+.section-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;margin-bottom:6px;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:2px;color:var(--white);line-height:1;margin-bottom:4px;}
+.section-sub{font-size:14px;color:var(--silver);margin-bottom:32px;}
+.divider{height:1px;background:var(--border);margin:32px 0;}
+
+/* ── CARDS ───────────────────────────────── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;}
+.card-sm{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;}
+.card-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.card-icon{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.card-icon.emt{background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);}
+.card-icon.aemt{background:rgba(232,93,4,0.15);border:1px solid rgba(232,93,4,0.3);}
+.card-icon.pm{background:rgba(255,183,3,0.15);border:1px solid rgba(255,183,3,0.3);}
+.card-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;}
+.card-title.emt{color:var(--success);}
+.card-title.aemt{color:var(--orange2);}
+.card-title.pm{color:var(--gold);}
+
+/* ── PROGRAM GRID ────────────────────────── */
+.prog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px;}
+.prog-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;}
+.prog-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.4);}
+.prog-card-top{padding:20px 24px 16px;border-bottom:1px solid var(--border);}
+.prog-card-body{padding:20px 24px;}
+.prog-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;}
+.prog-label.emt{color:var(--success);}
+.prog-label.aemt{color:var(--orange2);}
+.prog-label.pm{color:var(--gold);}
+.prog-name{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1.5px;line-height:1;}
+.prog-name.emt{color:var(--success);}
+.prog-name.aemt{color:var(--orange2);}
+.prog-name.pm{color:var(--gold);}
+.prog-tagline{font-size:12px;color:var(--silver);margin-top:4px;}
+
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.stat-box{background:var(--card2);border-radius:6px;padding:10px 12px;text-align:center;}
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;}
+.stat-val.emt{color:var(--success);}
+.stat-val.aemt{color:var(--orange2);}
+.stat-val.pm{color:var(--gold);}
+.stat-key{font-size:10px;color:var(--silver);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+
+.cost-block{background:linear-gradient(135deg,rgba(232,93,4,0.08),rgba(255,183,3,0.05));border:1px solid rgba(232,93,4,0.25);border-radius:8px;padding:14px 16px;margin-bottom:16px;}
+.cost-label{font-size:10px;color:var(--silver);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+.cost-main{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--gold);letter-spacing:1px;}
+.cost-note{font-size:11px;color:var(--silver);margin-top:2px;}
+
+.detail-list{list-style:none;}
+.detail-list li{font-size:13px;color:var(--muted);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:flex-start;gap:8px;}
+.detail-list li:last-child{border-bottom:none;}
+.detail-list li::before{content:'▸';color:var(--orange);flex-shrink:0;margin-top:1px;}
+
+/* ── TOTAL COST TABLE ─────────────────────── */
+.cost-table{width:100%;border-collapse:collapse;margin-top:16px;}
+.cost-table th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--silver);padding:10px 14px;border-bottom:2px solid var(--orange);}
+.cost-table td{padding:12px 14px;font-size:14px;border-bottom:1px solid var(--border);}
+.cost-table tr:last-child td{border-bottom:none;}
+.cost-table tr:hover td{background:rgba(255,255,255,0.03);}
+.cost-table .item-name{font-weight:600;color:var(--white);}
+.cost-table .item-note{font-size:11px;color:var(--silver);}
+.cost-table .price{font-family:'JetBrains Mono',monospace;color:var(--gold);font-weight:600;}
+.cost-table .subtotal td{background:rgba(232,93,4,0.08);font-weight:700;}
+.cost-table .subtotal .price{color:var(--orange2);font-size:16px;}
+
+/* ── CHECKLISTS ──────────────────────────── */
+.checklist-tabs{display:flex;gap:8px;margin-bottom:24px;}
+.cl-tab{background:var(--card);border:1px solid var(--border);color:var(--silver);font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border-radius:6px;cursor:pointer;transition:all 0.2s;font-weight:600;}
+.cl-tab.active.emt{background:rgba(34,197,94,0.12);border-color:var(--success);color:var(--success);}
+.cl-tab.active.aemt{background:rgba(232,93,4,0.12);border-color:var(--orange);color:var(--orange2);}
+.cl-tab.active.pm{background:rgba(255,183,3,0.12);border-color:var(--gold);color:var(--gold);}
+.cl-panel{display:none;}
+.cl-panel.active{display:block;}
+
+.cl-section{margin-bottom:24px;}
+.cl-section-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.cl-section-title .progress-mini{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--silver);background:var(--card2);padding:2px 10px;border-radius:20px;margin-left:auto;}
+
+.checklist-item{display:flex;align-items:flex-start;gap:12px;padding:12px;background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;cursor:pointer;transition:all 0.2s;user-select:none;}
+.checklist-item:hover{border-color:var(--silver);background:var(--card2);}
+.checklist-item.checked{border-color:rgba(34,197,94,0.3);background:rgba(34,197,94,0.05);}
+.checklist-item.checked .ci-label{text-decoration:line-through;color:var(--silver);}
+.ci-box{width:20px;height:20px;border:2px solid var(--silver);border-radius:4px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.checklist-item.checked .ci-box{background:var(--success);border-color:var(--success);}
+.ci-check{display:none;color:white;font-size:12px;font-weight:bold;}
+.checklist-item.checked .ci-check{display:block;}
+.ci-content{flex:1;}
+.ci-label{font-size:14px;font-weight:600;color:var(--white);}
+.ci-note{font-size:12px;color:var(--silver);margin-top:3px;}
+
+.progress-bar-wrap{background:var(--card2);border-radius:20px;height:8px;overflow:hidden;margin-bottom:8px;}
+.progress-bar{height:100%;border-radius:20px;transition:width 0.5s ease;background:linear-gradient(90deg,var(--orange),var(--gold));}
+.progress-label{font-size:12px;color:var(--silver);text-align:right;margin-bottom:16px;}
+
+/* ── ANNOUNCEMENTS ───────────────────────── */
+.announcement-card{background:var(--card);border-left:4px solid var(--orange);border-radius:0 var(--radius) var(--radius) 0;padding:20px;margin-bottom:16px;}
+.announcement-meta{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+.ann-date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--silver);}
+.ann-tag{font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:2px 10px;border-radius:20px;}
+.ann-tag.urgent{background:rgba(239,68,68,0.2);color:var(--red);}
+.ann-tag.info{background:rgba(34,197,94,0.15);color:var(--success);}
+.ann-tag.general{background:rgba(148,163,184,0.15);color:var(--silver);}
+.ann-tag.important{background:rgba(255,183,3,0.15);color:var(--gold);}
+.ann-title{font-weight:700;font-size:16px;color:var(--white);margin-bottom:6px;}
+.ann-body{font-size:14px;color:var(--muted);white-space:pre-wrap;}
+.ann-author{font-size:11px;color:var(--silver);margin-top:10px;}
+.no-ann{text-align:center;padding:60px 20px;color:var(--silver);font-size:14px;}
+.no-ann .icon{font-size:40px;margin-bottom:12px;opacity:0.4;}
+
+/* ── ADMIN ───────────────────────────────── */
+.admin-gate{max-width:400px;margin:60px auto;text-align:center;}
+.admin-lock{font-size:60px;margin-bottom:20px;}
+.admin-form-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;text-align:left;}
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);margin-bottom:8px;font-weight:600;}
+.form-input,.form-textarea,.form-select{width:100%;background:var(--navy);border:1px solid var(--border);color:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;padding:10px 14px;border-radius:6px;outline:none;transition:border-color 0.2s;}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--orange);}
+.form-textarea{min-height:100px;resize:vertical;}
+.form-select{cursor:pointer;}
+.btn{padding:10px 22px;border:none;border-radius:6px;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;}
+.btn-primary{background:var(--orange);color:white;}
+.btn-primary:hover{background:var(--orange2);}
+.btn-danger{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3);}
+.btn-danger:hover{background:rgba(239,68,68,0.25);}
+.btn-ghost{background:rgba(255,255,255,0.06);color:var(--silver);}
+.btn-ghost:hover{background:rgba(255,255,255,0.1);color:var(--white);}
+.btn-full{width:100%;}
+.error-msg{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:var(--red);padding:10px 14px;border-radius:6px;font-size:13px;margin-top:12px;display:none;}
+.success-msg{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:var(--success);padding:10px 14px;border-radius:6px;font-size:13px;margin-top:12px;display:none;}
+
+.admin-panel{display:none;}
+.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:gap;}
+.admin-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;color:var(--gold);}
+.admin-subtitle{font-size:13px;color:var(--silver);}
+
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE — TABLET (≤900px)
+════════════════════════════════════════════ */
+@media(max-width:900px){
+  .header-badge{display:none;}
+  .prog-grid{grid-template-columns:1fr 1fr;}
+  .admin-grid{grid-template-columns:1fr;}
+  .hero-title{font-size:38px;}
+  .hero-section{padding:24px;}
+}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤640px)
+════════════════════════════════════════════ */
+@media(max-width:640px){
+  /* Header */
+  .logo-emblem{width:42px;height:42px;}
+  .logo-text .college{font-size:15px;letter-spacing:1px;}
+  .header-badge{display:none;}
+  .hamburger{display:flex;}
+  /* Hide desktop nav, show hamburger */
+  .tab-nav{display:none;}
+  /* Main padding */
+  .main{padding:16px 14px;}
+  /* Hero */
+  .hero-section{padding:20px 16px;}
+  .hero-title{font-size:30px;letter-spacing:1px;}
+  .hero-desc{font-size:13px;}
+  .hero-stats{grid-template-columns:1fr 1fr;}
+  .hero-stat-val{font-size:22px;}
+  /* Section titles */
+  .section-title{font-size:28px;}
+  /* Cards */
+  .card{padding:16px;}
+  /* Programs */
+  .prog-grid{grid-template-columns:1fr;}
+  /* Highlight grid */
+  .highlight-row{grid-template-columns:1fr;}
+  /* Pathway row — stack vertically */
+  .pathway-row{flex-direction:column !important;align-items:stretch !important;}
+  .pathway-row > div[style*="font-size:24px"]{display:none !important;}
+  /* Cost tables — make readable on small screens */
+  .cost-table{font-size:12px;}
+  .cost-table th{font-size:9px;padding:8px 10px;}
+  .cost-table td{padding:8px 10px;}
+  .cost-table .item-note{display:none;}
+  /* Requirement table — hide 3rd & 4th columns on tiny screens */
+  .req-table th:nth-child(3),.req-table td:nth-child(3),
+  .req-table th:nth-child(4),.req-table td:nth-child(4){display:none;}
+  /* Checklists */
+  .checklist-tabs{flex-direction:column;}
+  .cl-tab{text-align:center;}
+  /* Admin */
+  .admin-grid{grid-template-columns:1fr;}
+  .admin-header{flex-direction:column;align-items:flex-start;gap:12px;}
+  .ann-admin-item{flex-direction:column;}
+  .ann-admin-item > div:last-child{display:flex;gap:8px;width:100%;}
+  .ann-admin-item > div:last-child .btn{flex:1;}
+  /* Modal */
+  .modal-box{padding:20px;}
+  .modal-actions{flex-direction:column;}
+  /* Footer */
+  .site-footer{padding:20px 16px;}
+  .lor-badge{font-size:9px;padding:3px 8px;}
+}
+
+.ann-list-admin{margin-top:16px;}
+.ann-admin-item{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.ann-admin-content{flex:1;}
+.ann-admin-title{font-weight:700;font-size:14px;margin-bottom:4px;}
+.ann-admin-meta{font-size:11px;color:var(--silver);}
+
+/* ── HOME STATS ──────────────────────────── */
+.hero-section{background:linear-gradient(135deg,var(--card) 0%,var(--card2) 100%);border:1px solid var(--border);border-radius:12px;padding:36px;margin-bottom:28px;position:relative;overflow:hidden;}
+.hero-section::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,93,4,0.12),transparent 70%);}
+.hero-section::after{content:'';position:absolute;bottom:-40px;left:40%;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(255,183,3,0.07),transparent 70%);}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:3px;line-height:1;color:var(--white);margin-bottom:8px;}
+.hero-title span{color:var(--orange2);}
+.hero-desc{font-size:15px;color:var(--muted);max-width:600px;margin-bottom:24px;}
+.hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;}
+.hero-stat{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center;}
+.hero-stat-val{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--orange2);line-height:1;}
+.hero-stat-key{font-size:11px;color:var(--silver);letter-spacing:1px;text-transform:uppercase;margin-top:4px;}
+
+.highlight-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:24px;}
+.highlight-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;gap:14px;align-items:flex-start;}
+.highlight-icon{font-size:28px;flex-shrink:0;}
+.highlight-title{font-weight:700;font-size:15px;margin-bottom:4px;}
+.highlight-desc{font-size:13px;color:var(--silver);}
+
+/* ── REQUIREMENTS TABLE ─────────────────── */
+.req-table{width:100%;border-collapse:collapse;}
+.req-table th{background:var(--navy2);text-align:left;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--silver);padding:10px 14px;border-bottom:2px solid var(--orange);}
+.req-table td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:top;}
+.req-table tr:hover td{background:rgba(255,255,255,0.02);}
+.check-yes{color:var(--success);}
+.check-no{color:var(--red);}
+.check-maybe{color:var(--gold);}
+
+/* ── EDIT MODAL ──────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.25s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-box{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--orange);border-radius:var(--radius);padding:28px;width:100%;max-width:560px;transform:translateY(16px);transition:transform 0.25s;max-height:90vh;overflow-y:auto;}
+.modal-overlay.open .modal-box{transform:translateY(0);}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--orange2);letter-spacing:1px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;}
+.modal-close{background:none;border:none;color:var(--silver);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;}
+.modal-close:hover{color:var(--white);}
+.modal-actions{display:flex;gap:10px;margin-top:20px;}
+/* ── FOOTER ──────────────────────────────── */
+.site-footer{background:var(--navy2);border-top:1px solid var(--border);padding:24px;text-align:center;margin-top:60px;}
+.footer-text{font-size:12px;color:var(--silver);line-height:1.8;}
+.footer-text a{color:var(--orange2);text-decoration:none;}
+.footer-text a:hover{text-decoration:underline;}
+.lor-badge{display:inline-block;background:linear-gradient(135deg,rgba(255,183,3,0.15),rgba(232,93,4,0.1));border:1px solid var(--gold);color:var(--gold);font-size:10px;letter-spacing:2px;padding:4px 12px;border-radius:20px;margin:8px 4px;}
+
+/* ── ACCORDION ───────────────────────────── */
+.accordion-item{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden;}
+.accordion-head{width:100%;background:none;border:none;color:var(--white);font-family:'Source Sans 3',sans-serif;font-size:14px;font-weight:700;text-align:left;padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background 0.2s;}
+.accordion-head:hover{background:rgba(255,255,255,0.03);}
+.accordion-head .arrow{color:var(--orange);transition:transform 0.3s;font-size:12px;}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.3s ease;}
+.accordion-body.open{max-height:800px;padding:0 20px 18px;}
+.accordion-body p,.accordion-body li{font-size:13px;color:var(--muted);line-height:1.7;}
+.accordion-body ul{margin-left:16px;margin-top:8px;}
+.accordion-body li{margin-bottom:4px;}
+
+/* ── PILLS / TAGS ────────────────────────── */
+.pill{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;margin:2px;}
+.pill-or{background:rgba(232,93,4,0.15);color:var(--orange2);}
+.pill-gr{background:rgba(34,197,94,0.15);color:var(--success);}
+.pill-go{background:rgba(255,183,3,0.15);color:var(--gold);}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <!-- CAMP EMS Logo SVG Emblem -->
+      <div class="logo-emblem">
+        <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#e85d04"/>
+              <stop offset="100%" style="stop-color:#ffb703"/>
+            </linearGradient>
+          </defs>
+          <!-- Star of Life -->
+          <polygon points="36,4 42,18 57,14 50,27 64,34 50,41 57,54 42,50 36,64 30,50 15,54 22,41 8,34 22,27 15,14 30,18" fill="none" stroke="url(#starGrad)" stroke-width="2.5"/>
+          <!-- Rod of Asclepius -->
+          <line x1="36" y1="20" x2="36" y2="52" stroke="url(#starGrad)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Snake body -->
+          <path d="M36,24 Q30,28 36,32 Q42,36 36,40 Q30,44 36,48" fill="none" stroke="#ffb703" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Cross center -->
+          <rect x="30" y="30" width="12" height="12" rx="2" fill="rgba(232,93,4,0.25)" stroke="url(#starGrad)" stroke-width="1.5"/>
+          <line x1="30" y1="36" x2="42" y2="36" stroke="#e85d04" stroke-width="1.5"/>
+          <line x1="36" y1="30" x2="36" y2="42" stroke="#e85d04" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <div class="college">CAMP Community College</div>
+        <div class="program">Emergency Medical Services Program</div>
+        <div class="tagline">Suffolk · Franklin · Smithfield</div>
+      </div>
+    </div>
+    <div class="header-badge">
+      <span class="badge gold">CoAEMSP Letters of Review</span>
+      <span class="badge">NREMT Certified</span>
+      <span class="badge">VCCS Accredited</span>
+    </div>
+    <button class="hamburger" id="hamburger-btn" onclick="toggleMobileNav()" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ══ MOBILE NAV DRAWER ════════════════════════════ -->
+<div class="mobile-nav-overlay" id="mobile-nav-overlay" onclick="closeMobileNav()"></div>
+<nav class="mobile-nav-drawer" id="mobile-nav-drawer">
+  <div class="mobile-nav-header">
+    <span class="mobile-nav-title">CAMP EMS</span>
+    <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
+  </div>
+  <div class="mobile-nav-links">
+    <button class="mobile-tab-btn active" id="mob-btn-home"          onclick="switchTab('home');closeMobileNav()"><span class="tab-emoji">🏠</span> Home</button>
+    <button class="mobile-tab-btn"        id="mob-btn-programs"      onclick="switchTab('programs');closeMobileNav()"><span class="tab-emoji">📋</span> Programs &amp; Costs</button>
+    <button class="mobile-tab-btn"        id="mob-btn-requirements"  onclick="switchTab('requirements');closeMobileNav()"><span class="tab-emoji">✅</span> Requirements</button>
+    <button class="mobile-tab-btn"        id="mob-btn-checklists"    onclick="switchTab('checklists');closeMobileNav()"><span class="tab-emoji">☑️</span> Checklists</button>
+    <button class="mobile-tab-btn"        id="mob-btn-announcements" onclick="switchTab('announcements');closeMobileNav()"><span class="tab-emoji">📢</span> Announcements</button>
+    <button class="mobile-tab-btn"        id="mob-btn-resources"     onclick="switchTab('resources');closeMobileNav()"><span class="tab-emoji">📚</span> Resources &amp; FAQ</button>
+    <button class="mobile-tab-btn"        id="mob-btn-admin"         onclick="switchTab('admin');closeMobileNav()"><span class="tab-emoji">🔐</span> Admin</button>
+  </div>
+  <div class="mobile-nav-footer">
+    <div class="mobile-nav-badges">
+      <span class="mobile-badge">🏅 CoAEMSP LOR — AEMT &amp; Paramedic</span>
+      <span class="mobile-badge">✓ NREMT Certified · VCCS Accredited</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ NAV ═════════════════════════════════════════════ -->
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="switchTab('home')">🏠 Home</button>
+    <button class="tab-btn" onclick="switchTab('programs')">📋 Programs & Costs</button>
+    <button class="tab-btn" onclick="switchTab('requirements')">✅ Requirements</button>
+    <button class="tab-btn" onclick="switchTab('checklists')">☑️ Checklists</button>
+    <button class="tab-btn" onclick="switchTab('announcements')">📢 Announcements</button>
+    <button class="tab-btn" onclick="switchTab('resources')">📚 Resources & FAQ</button>
+    <button class="tab-btn" onclick="switchTab('admin')">🔐 Admin<span class="lock-icon"></span></button>
+  </div>
+</nav>
+
+<!-- ══ MAIN CONTENT ═════════════════════════════════════ -->
+<main class="main">
+
+  <!-- ████ HOME ████████████████████████████████████████ -->
+  <div id="tab-home" class="tab-panel active">
+    <div class="hero-section">
+      <div class="hero-title">Welcome to <span>CAMP EMS</span></div>
+      <div class="hero-desc">
+        Virginia's only EMS program with CoAEMSP Letters of Review for both AEMT and Paramedic programs.
+        Join us and launch your career in emergency medicine — from EMT to Paramedic, we'll take you there.
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-val">8</div><div class="hero-stat-key">EMT Credits</div></div>
+        <div class="hero-stat"><div class="hero-stat-val">11</div><div class="hero-stat-key">AEMT Credits</div></div>
+        <div class="hero-stat"><div class="hero-stat-val">33</div><div class="hero-stat-key">Paramedic Credits</div></div>
+        <div class="hero-stat"><div class="hero-stat-val">65</div><div class="hero-stat-key">AAS Degree</div></div>
+        <div class="hero-stat"><div class="hero-stat-val">3</div><div class="hero-stat-key">Campuses</div></div>
+      </div>
+    </div>
+
+    <!-- Director Message -->
+    <div class="card" style="border-left:4px solid var(--orange);">
+      <div class="card-header">
+        <div class="card-icon aemt">👨‍⚕️</div>
+        <div>
+          <div class="card-title aemt" style="font-size:18px;">Message from the Program Director</div>
+          <div style="font-size:12px;color:var(--silver);">Dr. Carlos Cajares, DHSc, MPA, NRP</div>
+        </div>
+      </div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.8;">
+        Welcome to our Emergency Medical Services Program at CAMP Community College. We are committed to providing you with the highest-quality education and training to prepare you for a rewarding career in EMS. Our program offers a comprehensive curriculum equipping you with the knowledge, skills, and hands-on experience necessary to excel in this critical field. You will learn from experienced professionals who are dedicated to your success and passionate about the EMS profession.
+      </p>
+      <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-top:12px;">
+        As Virginia's ONLY EMS program holding CoAEMSP Letters of Review for both AEMT and Paramedic programs, we bring a standard of excellence that sets our graduates apart. We are here to support you every step of the way.
+      </p>
+
+      <!-- Director Quote -->
+      <div style="margin-top:28px;padding:28px 32px;background:linear-gradient(135deg,rgba(232,93,4,0.07) 0%,rgba(255,183,3,0.05) 100%);border-left:4px solid var(--orange);border-radius:0 10px 10px 0;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-10px;left:16px;font-family:'Bebas Neue',sans-serif;font-size:120px;color:rgba(232,93,4,0.08);line-height:1;user-select:none;pointer-events:none;">"</div>
+        <blockquote style="position:relative;z-index:1;margin:0;">
+          <p style="font-family:'Bebas Neue',sans-serif;font-size:clamp(15px,2.2vw,20px);letter-spacing:1.5px;line-height:1.9;color:var(--white);margin:0;">
+            Our program is not just training paramedics.<br/>
+            We are building clinicians.<br/>
+            People who will make life-or-death decisions without hesitation —<br/>
+            because we trained them to think clearly under pressure.<br/>
+            That is the standard we hold.<br/>
+            That is the standard they earn.
+          </p>
+          <footer style="margin-top:18px;display:flex;align-items:center;gap:12px;">
+            <div style="height:1px;width:32px;background:var(--orange);flex-shrink:0;"></div>
+            <cite style="font-style:normal;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--orange2);font-family:'JetBrains Mono',monospace;">Dr. Carlos Cajares, DHSc, MPA, NRP &nbsp;·&nbsp; EMS Program Director</cite>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- Highlights -->
+    <div style="margin-bottom:8px;"><span class="section-label">Program Highlights</span></div>
+    <div class="highlight-row">
+      <div class="highlight-card">
+        <div class="highlight-icon">🏅</div>
+        <div>
+          <div class="highlight-title">Only in Virginia</div>
+          <div class="highlight-desc">CoAEMSP Letters of Review for both AEMT and Paramedic programs — unique in the Commonwealth.</div>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">🏥</div>
+        <div>
+          <div class="highlight-title">Real-World Clinical</div>
+          <div class="highlight-desc">Training in regional ambulances, Sentara hospitals, and emergency departments across Hampton Roads.</div>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">📅</div>
+        <div>
+          <div class="highlight-title">Flexible Scheduling</div>
+          <div class="highlight-desc">Traditional and accelerated formats including evening and weekend courses to fit your life.</div>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">💰</div>
+        <div>
+          <div class="highlight-title">Financial Aid Available</div>
+          <div class="highlight-desc">FAFSA, G3 Tuition Assistance, and agency partnership scholarships — we help you find funding.</div>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">🎓</div>
+        <div>
+          <div class="highlight-title">Advanced Standing</div>
+          <div class="highlight-desc">Certified AEMTs receive 11 credits and advanced placement directly into the Paramedic program.</div>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">📍</div>
+        <div>
+          <div class="highlight-title">Three Campuses</div>
+          <div class="highlight-desc">Suffolk (Hobbs), Franklin (Main/WDC), and Smithfield — serving all of Western Tidewater.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Pathway -->
+    <div class="card">
+      <div class="section-label">EMS Career Pathway</div>
+      <div class="section-title" style="font-size:26px;margin-bottom:16px;">Your Journey in EMS</div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <div style="background:rgba(34,197,94,0.1);border:1px solid var(--success);border-radius:8px;padding:14px 18px;text-align:center;min-width:130px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--success);">EMT</div>
+          <div style="font-size:11px;color:var(--silver);">8 Credits · $1,376</div>
+          <div style="font-size:10px;color:var(--success);margin-top:4px;">BLS Provider</div>
+        </div>
+        <div style="color:var(--orange);font-size:24px;font-weight:bold;">→</div>
+        <div style="background:rgba(232,93,4,0.1);border:1px solid var(--orange);border-radius:8px;padding:14px 18px;text-align:center;min-width:130px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--orange2);">AEMT</div>
+          <div style="font-size:11px;color:var(--silver);">11 Credits · $1,891</div>
+          <div style="font-size:10px;color:var(--orange2);margin-top:4px;">ALS Provider</div>
+        </div>
+        <div style="color:var(--orange);font-size:24px;font-weight:bold;">→</div>
+        <div style="background:rgba(255,183,3,0.1);border:1px solid var(--gold);border-radius:8px;padding:14px 18px;text-align:center;min-width:130px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);">PARAMEDIC</div>
+          <div style="font-size:11px;color:var(--silver);">33 Credits · $5,674</div>
+          <div style="font-size:10px;color:var(--gold);margin-top:4px;">Advanced ALS</div>
+        </div>
+        <div style="color:var(--orange);font-size:24px;font-weight:bold;">→</div>
+        <div style="background:rgba(148,163,184,0.08);border:1px solid var(--border);border-radius:8px;padding:14px 18px;text-align:center;min-width:130px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--silver);">AAS DEGREE</div>
+          <div style="font-size:11px;color:var(--silver);">65 Credits Total</div>
+          <div style="font-size:10px;color:var(--silver);margin-top:4px;">Full Degree</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Salary Info -->
+    <div class="card">
+      <div class="section-label">Hampton Roads Salary Outlook — Updated 2025–2026</div>
+      <div class="section-title" style="font-size:26px;margin-bottom:16px;">Career Earnings</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:16px;">
+        <div class="stat-box">
+          <div class="stat-val emt" style="font-size:26px;">$42K–$57K</div>
+          <div class="stat-key">EMT Annual Range</div>
+          <div style="font-size:11px;color:var(--silver);margin-top:6px;">Fire dept. roles: $50K–$73K</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val aemt" style="font-size:26px;">$50K–$65K</div>
+          <div class="stat-key">AEMT Annual Range</div>
+          <div style="font-size:11px;color:var(--silver);margin-top:6px;">Public safety track: up to $73K</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val pm" style="font-size:26px;">$54K–$80K+</div>
+          <div class="stat-key">Paramedic Annual Range</div>
+          <div style="font-size:11px;color:var(--silver);margin-top:6px;">NFR median: ~$75K | Top earners: $93K+</div>
+        </div>
+      </div>
+      <div style="background:rgba(232,93,4,0.07);border:1px solid rgba(232,93,4,0.2);border-radius:8px;padding:14px 16px;margin-bottom:10px;">
+        <div style="font-size:12px;font-weight:700;color:var(--orange2);margin-bottom:6px;">📍 Current Hampton Roads Hiring Highlights (2025–2026)</div>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:1.9;">
+          <li>🔥 <strong>Norfolk Fire-Rescue</strong> — Actively hiring Paramedics with a <strong style="color:var(--gold);">$5,000 signing bonus</strong></li>
+          <li>🔥 <strong>City of Hampton Fire & Rescue</strong> — Firefighter/EMT/AEMT/Paramedic roles posted at <strong style="color:var(--gold);">$50K–$73K</strong></li>
+          <li>🔥 <strong>Suffolk Fire & Rescue</strong> — Active Paramedic recruitment; NRP or Virginia cert required</li>
+          <li>🔥 <strong>Virginia Beach Fire</strong> — Firefighter-Paramedic average <strong style="color:var(--gold);">$56K–$68K</strong>, top earners at $84K–$93K</li>
+          <li>📈 <strong>Firefighter-Paramedic track</strong> statewide avg: $59,095 with OT opportunities on top</li>
+        </ul>
+      </div>
+      <p style="font-size:11px;color:var(--silver);">*Salary data sourced from ZipRecruiter, Glassdoor, Indeed, and direct agency postings (2025–2026). Ranges reflect Hampton Roads / Tidewater region. Fire department dual-role positions (Firefighter-Paramedic) typically pay significantly more than private EMS. Actual compensation varies by employer, experience, shift differential, and overtime.</p>
+    </div>
+  </div>
+
+  <!-- ████ PROGRAMS & COSTS ████████████████████████████ -->
+  <div id="tab-programs" class="tab-panel">
+    <div class="section-label">Program Details</div>
+    <div class="section-title">Programs & Cost Breakdown</div>
+    <div class="section-sub">All three certification pathways with complete itemized cost estimates (in-state tuition)</div>
+
+    <div class="prog-grid">
+
+      <!-- EMT CARD -->
+      <div class="prog-card">
+        <div class="prog-card-top">
+          <div class="prog-label emt">Career Studies Certificate</div>
+          <div class="prog-name emt">EMT</div>
+          <div class="prog-tagline">Emergency Medical Technician — Basic Life Support</div>
+        </div>
+        <div class="prog-card-body">
+          <div class="stat-row">
+            <div class="stat-box"><div class="stat-val emt">8</div><div class="stat-key">Credit Hours</div></div>
+            <div class="stat-box"><div class="stat-val emt">150–260</div><div class="stat-key">Training Hrs</div></div>
+          </div>
+          <div class="cost-block">
+            <div class="cost-label">Tuition (In-State)</div>
+            <div class="cost-main">$1,376</div>
+            <div class="cost-note">EMS 111 + EMS 120 | 8 credit hours</div>
+          </div>
+          <div style="font-weight:700;font-size:13px;color:var(--white);margin-bottom:10px;letter-spacing:0.5px;">Courses Included</div>
+          <ul class="detail-list" style="margin-bottom:14px;">
+            <li><strong>EMS 111</strong> — Emergency Medical Technician (core)</li>
+            <li><strong>EMS 120</strong> — EMT Clinical Practicum</li>
+          </ul>
+          <div style="font-weight:700;font-size:13px;color:var(--white);margin-bottom:10px;">Skills Covered</div>
+          <ul class="detail-list" style="margin-bottom:14px;">
+            <li>Patient assessment &amp; vital signs</li>
+            <li>CPR &amp; AED use</li>
+            <li>Oxygen therapy administration</li>
+            <li>Basic wound care &amp; splinting</li>
+            <li>Airway management (BLS)</li>
+            <li>Spinal motion restriction</li>
+            <li>Obstetric &amp; pediatric emergencies</li>
+          </ul>
+          <div style="font-weight:700;font-size:13px;color:var(--white);margin-bottom:10px;">Salary Outlook</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--success);">$42,000–$57,000 / yr</div>
+          <div style="font-size:11px;color:var(--silver);">Hampton Roads range (2025–2026)</div>
+          <div style="font-size:11px;color:var(--success);margin-top:4px;">Fire dept. track: $50K–$73K</div>
+        </div>
+      </div>
+
+      <!-- AEMT CARD -->
+      <div class="prog-card">
+        <div class="prog-card-top">
+          <div class="prog-label aemt">Career Studies Certificate</div>
+          <div class="prog-name aemt">AEMT</div>
+          <div class="prog-tagline">Advanced EMT — Advanced Life Support</div>
+        </div>
+        <div class="prog-card-body">
+          <div class="stat-row">
+            <div class="stat-box"><div class="stat-val aemt">11</div><div class="stat-key">Credit Hours</div></div>
+            <div class="stat-box"><div class="stat-val aemt">200–300</div><div class="stat-key">Training Hrs</div></div>
+          </div>
+          <div class="cost-block">
+            <div class="cost-label">Tuition (In-State)</div>
+            <div class="cost-main">$1,891</div>
+            <div class="cost-note">11 credit hours | Prerequisite: EMT</div>
+          </div>
+          <div style="font-weight:700;font-size:13px;color:var(--white);margin-bottom:10px;">Skills Beyond EMT</div>
+          <ul class="detail-list" style="margin-bottom:14px;">
+            <li>Advanced airway management</li>
+            <li>Intravenous (IV) therapy</li>
+            <li>Intraosseous (IO) access</li>
+            <li>Expanded medication administration</li>
+            <li>Advanced patient assessment</li>
+            <li>Hospital &amp; ambulance clinical hours</li>
+          </ul>
+          <div style="margin-bottom:12px;">
+            <span class="lor-badge">🏅 Virginia's ONLY CoAEMSP LOR for AEMT</span>
+          </div>
+          <div style="font-weight:700;font-size:13px;color:var(--white);margin-bottom:10px;">Salary Outlook</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--orange2);">$50,000–$65,000 / yr</div>
+          <div style="font-size:11px;color:var(--silver);">Hampton Roads range (2025–2026)</div>
+          <div style="font-size:11px;color:var(--orange2);margin-top:4px;">Public safety track: up to $73K</div>
+        </div>
+      </div>
+
+      <!-- PARAMEDIC CARD -->
+      <div class="prog-card">
+        <div class="prog-card-top">
+          <div class="prog-label pm">Career Studies Certificate / AAS Pathway</div>
+          <div class="prog-name pm">PARAMEDIC</div>
+          <div class="prog-tagline">Highest Level of Pre-Hospital Care</div>
+        </div>
+        <div class="prog-card-body">
+          <div class="stat-row">
+            <div class="stat-box"><div class="stat-val pm">33</div><div class="stat-key">Credit Hours</div></div>
+            <div class="stat-box"><div class="stat-val pm">1,500+</div><div class="stat-key">Training Hrs</div></div>
+          </div>
+          <div class="cost-block">
+            <div class="cost-label">Tuition (In-State)</div>
+            <div class="cost-main">$5,674</div>
+            <div class="cost-note">33 credit hours | Prerequisite: EMT + AEMT</div>
+          </div>
+          <div style="font-weight:700;font-size:13px;color:var(--white);margin-bottom:10px;">Advanced Skills</div>
+          <ul class="detail-list" style="margin-bottom:14px;">
+            <li>ACLS &amp; PALS protocols</li>
+            <li>Advanced pharmacology (40+ medications)</li>
+            <li>12-lead ECG interpretation</li>
+            <li>Advanced cardiac monitoring</li>
+            <li>Surgical airways &amp; RSI</li>
+            <li>Cardiovascular emergency management</li>
+            <li>Pediatric &amp; OB emergencies</li>
+            <li>Extensive field internship hours</li>
+          </ul>
+          <div style="margin-bottom:12px;">
+            <span class="lor-badge">🏅 CoAEMSP LOR for Paramedic</span>
+          </div>
+          <div style="font-weight:700;font-size:13px;color:var(--white);margin-bottom:10px;">Salary Outlook</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--gold);">$54,000–$80,000+ / yr</div>
+          <div style="font-size:11px;color:var(--silver);">Hampton Roads range (2025–2026)</div>
+          <div style="font-size:11px;color:var(--gold);margin-top:4px;">NFR median ~$75K | Top earners: $93K+</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FULL COST BREAKDOWN TABLE -->
+    <div class="divider"></div>
+    <div class="section-label">Complete Cost Estimates</div>
+    <div class="section-title" style="font-size:28px;margin-bottom:6px;">Itemized Cost Per Program</div>
+    <div class="section-sub">All figures reflect current in-state rates. Costs subject to change. Contact the Registrar for official figures.</div>
+
+    <!-- EMT Costs -->
+    <div class="card" style="border-top:3px solid var(--success);">
+      <div class="card-header">
+        <div class="card-icon emt">🟢</div>
+        <div><div class="card-title emt">EMT Program — Itemized Costs</div></div>
+      </div>
+      <table class="cost-table">
+        <thead><tr><th>Item</th><th>Notes</th><th>Est. Cost</th></tr></thead>
+        <tbody>
+          <tr><td><div class="item-name">In-State Tuition</div><div class="item-note">EMS 111 + EMS 120 (8 credits @ ~$172/credit)</div></td><td><span class="pill pill-gr">Required</span></td><td class="price">$1,376</td></tr>
+          <tr><td><div class="item-name">Textbook / Course Materials</div><div class="item-note">AAOS Emergency Care textbook, workbook</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$175–$250</td></tr>
+          <tr><td><div class="item-name">CPR/BLS Certification</div><div class="item-note">AHA BLS for Healthcare Providers (if not current)</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$30–$50</td></tr>
+          <tr><td><div class="item-name">Background Check</div><div class="item-note">Free through VA OEMS — required before clinical placement</div></td><td><span class="pill pill-gr">FREE</span></td><td class="price">$0</td></tr>
+          <tr><td><div class="item-name">Drug Screening</div><div class="item-note">Urine drug panel — pre-enrollment</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$25–$50</td></tr>
+          <tr><td><div class="item-name">Immunizations / Health Records</div><div class="item-note">TB test, Hep B, MMR, Varicella, flu (varies)</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$50–$150</td></tr>
+          <tr><td><div class="item-name">Uniform Polo & Pants</div><div class="item-note">Program-specified polo shirt and uniform pants</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$40–$80</td></tr>
+          <tr><td><div class="item-name">NREMT Exam Fee</div><div class="item-note">Cognitive + Psychomotor exam registration</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$90–$110</td></tr>
+          <tr><td><div class="item-name">Sterling Credentials (EDS/Clinical Tracking)</div><div class="item-note">EMS Education Documentation System — per-student enrollment fee</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$74</td></tr>
+          <tr><td><div class="item-name">Stethoscope &amp; Pocket Tools</div><div class="item-note">Quality stethoscope, penlight, trauma shears</div></td><td><span class="pill pill-go">Recommended</span></td><td class="price">$40–$100</td></tr>
+          <tr class="subtotal"><td><div class="item-name">ESTIMATED TOTAL</div></td><td></td><td class="price">~$1,921–$2,466</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- AEMT Costs -->
+    <div class="card" style="border-top:3px solid var(--orange);">
+      <div class="card-header">
+        <div class="card-icon aemt">🟠</div>
+        <div><div class="card-title aemt">AEMT Program — Itemized Costs</div></div>
+      </div>
+      <table class="cost-table">
+        <thead><tr><th>Item</th><th>Notes</th><th>Est. Cost</th></tr></thead>
+        <tbody>
+          <tr><td><div class="item-name">In-State Tuition</div><div class="item-note">11 credit hours</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$1,891</td></tr>
+          <tr><td><div class="item-name">Textbooks / Materials</div><div class="item-note">AEMT-specific texts and pharmacology resources</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$150–$250</td></tr>
+          <tr><td><div class="item-name">IV/IO Skill Supplies</div><div class="item-note">Practice supplies for clinical skills</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$20–$50</td></tr>
+          <tr><td><div class="item-name">Background Check</div><div class="item-note">Free through VA OEMS — updated for new clinical sites</div></td><td><span class="pill pill-gr">FREE</span></td><td class="price">$0</td></tr>
+          <tr><td><div class="item-name">Drug Screening</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$25–$50</td></tr>
+          <tr><td><div class="item-name">Immunization Update</div><div class="item-note">Verify current status for clinical</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$0–$100</td></tr>
+          <tr><td><div class="item-name">Sterling Credentials (EDS/Clinical Tracking)</div><div class="item-note">EMS Education Documentation System — per-student enrollment fee</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$97</td></tr>
+          <tr><td><div class="item-name">NREMT AEMT Exam</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$90–$110</td></tr>
+          <tr><td><div class="item-name">Uniform Polo & Pants</div><div class="item-note">Replacement or update if needed; ID badge for clinical sites</div></td><td><span class="pill pill-go">Recommended</span></td><td class="price">$40–$80</td></tr>
+          <tr class="subtotal"><td><div class="item-name">ESTIMATED TOTAL</div></td><td></td><td class="price">~$2,331–$2,731</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:14px;padding:12px;background:rgba(255,183,3,0.06);border-radius:6px;font-size:12px;color:var(--muted);">
+        💡 <strong>Advanced Standing Note:</strong> NREMT- or Virginia-certified AEMTs receive 11 credits and advanced placement directly into the Paramedic program.
+      </div>
+    </div>
+
+    <!-- Paramedic Costs -->
+    <div class="card" style="border-top:3px solid var(--gold);">
+      <div class="card-header">
+        <div class="card-icon pm">⭐</div>
+        <div><div class="card-title pm">Paramedic Program — Itemized Costs</div></div>
+      </div>
+      <table class="cost-table">
+        <thead><tr><th>Item</th><th>Notes</th><th>Est. Cost</th></tr></thead>
+        <tbody>
+          <tr><td><div class="item-name">In-State Tuition</div><div class="item-note">33 credit hours (paramedic courses only)</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$5,674</td></tr>
+          <tr><td><div class="item-name">Paramedic Textbooks</div><div class="item-note">Sanders' Paramedic Textbook 6th Ed. + resources</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$200–$350</td></tr>
+          <tr><td><div class="item-name">ACLS Certification</div><div class="item-note">AHA Advanced Cardiac Life Support</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$150–$200</td></tr>
+          <tr><td><div class="item-name">PALS Certification</div><div class="item-note">AHA Pediatric Advanced Life Support</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$150–$200</td></tr>
+          <tr><td><div class="item-name">Background Check</div><div class="item-note">Free through VA OEMS</div></td><td><span class="pill pill-gr">FREE</span></td><td class="price">$0</td></tr>
+          <tr><td><div class="item-name">Drug Screening</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$25–$50</td></tr>
+          <tr><td><div class="item-name">Immunization Documentation</div><div class="item-note">Current &amp; complete for all clinical sites</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$0–$150</td></tr>
+          <tr><td><div class="item-name">Sterling Credentials (EDS/Clinical Tracking)</div><div class="item-note">EMS Education Documentation System — per-student enrollment fee</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$144</td></tr>
+          <tr><td><div class="item-name">NREMT Paramedic Exam (NRP)</div><div class="item-note">Computer-adaptive cognitive exam</div></td><td><span class="pill pill-or">Required</span></td><td class="price">$110–$125</td></tr>
+          <tr><td><div class="item-name">ECG Monitor Reference Tools</div><div class="item-note">12-lead apps, reference cards, ECG simulator access</div></td><td><span class="pill pill-go">Recommended</span></td><td class="price">$30–$80</td></tr>
+          <tr><td><div class="item-name">Uniform Polo & Pants</div><div class="item-note">Program polo shirt, uniform pants, name badge</div></td><td><span class="pill pill-go">Recommended</span></td><td class="price">$60–$120</td></tr>
+          <tr><td><div class="item-name">Transport / Housing (Clinical)</div><div class="item-note">Travel to clinical/hospital sites may vary</div></td><td><span class="pill pill-go">Variable</span></td><td class="price">Varies</td></tr>
+          <tr class="subtotal"><td><div class="item-name">ESTIMATED TOTAL</div></td><td></td><td class="price">~$6,639–$7,484</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:14px;padding:12px;background:rgba(255,183,3,0.06);border-radius:6px;font-size:12px;color:var(--muted);">
+        💡 <strong>Full EMS Pathway (EMT→AEMT→Paramedic):</strong> Estimated total investment of <strong style="color:var(--gold);">$10,891–$12,681</strong> in-state, including tuition and all fees. Financial aid and G3 assistance available.
+      </div>
+    </div>
+
+    <!-- AAS Note -->
+    <div class="card" style="border:1px solid var(--silver);">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(148,163,184,0.1);border:1px solid var(--silver);">🎓</div>
+        <div><div class="card-title" style="color:var(--silver);font-size:18px;">AAS Degree in EMS (65 Credits Total)</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">The Associate of Applied Science (AAS) in Emergency Medical Services is the full degree pathway combining EMS core coursework with general education requirements. The 65-credit program includes all Paramedic coursework plus additional college-level courses in English, Math, and Social Sciences.</p>
+      <table class="cost-table">
+        <thead><tr><th>Component</th><th>Credits</th><th>Est. Tuition</th></tr></thead>
+        <tbody>
+          <tr><td class="item-name">EMS Core (Paramedic)</td><td>33</td><td class="price">$5,674</td></tr>
+          <tr><td class="item-name">General Education Requirements</td><td>~32</td><td class="price">~$5,504</td></tr>
+          <tr class="subtotal"><td class="item-name">AAS TOTAL (Tuition)</td><td>65</td><td class="price">~$11,178</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ████ REQUIREMENTS ████████████████████████████████ -->
+  <div id="tab-requirements" class="tab-panel">
+    <div class="section-label">Admission Criteria</div>
+    <div class="section-title">Program Requirements</div>
+    <div class="section-sub">Detailed eligibility and documentation requirements for each program level</div>
+
+    <div class="card" style="overflow-x:auto;">
+      <table class="req-table">
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th>EMT</th>
+            <th>AEMT</th>
+            <th>PARAMEDIC</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>High School Diploma / GED</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td></tr>
+          <tr><td>Minimum Age</td><td>16 years</td><td>18 years</td><td>18 years</td></tr>
+          <tr><td>Prior EMS Certification</td><td class="check-no">Not Required</td><td>Current EMT</td><td>Current EMT + AEMT</td></tr>
+          <tr><td>Valid Driver's License</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td></tr>
+          <tr><td>Criminal Background Check</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td></tr>
+          <tr><td>Drug Screening</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td></tr>
+          <tr><td>AHA BLS / CPR Certification</td><td class="check-maybe">Provided Week 1</td><td class="check-yes">Must be Current</td><td class="check-yes">Must be Current</td></tr>
+          <tr><td>AHA ACLS Certification</td><td class="check-no">Not Required</td><td class="check-no">Not Required</td><td class="check-yes">✓ Required</td></tr>
+          <tr><td>AHA PALS Certification</td><td class="check-no">Not Required</td><td class="check-no">Not Required</td><td class="check-yes">✓ Required</td></tr>
+          <tr><td>Immunization Documentation</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td></tr>
+          <tr><td>TB Test / Tuberculosis Screening</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td></tr>
+          <tr><td>Hepatitis B Vaccination</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td></tr>
+          <tr><td>Physical Fitness to Perform Skills</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td></tr>
+          <tr><td>English Language Proficiency</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td></tr>
+          <tr><td>Computer Literacy</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td><td class="check-yes">✓ Required</td></tr>
+          <tr><td>FAFSA / Financial Aid (Optional)</td><td class="check-maybe">Recommended</td><td class="check-maybe">Recommended</td><td class="check-maybe">Recommended</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Application Steps -->
+    <div class="card">
+      <div class="section-label">How to Apply</div>
+      <div class="section-title" style="font-size:26px;margin-bottom:16px;">Application Process</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
+        <div class="card-sm" style="border-top:3px solid var(--orange);">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--orange);line-height:1;">01</div>
+          <div style="font-weight:700;margin-bottom:6px;">Apply for Admission</div>
+          <div style="font-size:12px;color:var(--silver);">Complete online at <strong>apply.vccs.edu</strong> (no application fee). Log in, review your To-Do List, and complete the Advising Questionnaire.</div>
+        </div>
+        <div class="card-sm" style="border-top:3px solid var(--orange);">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--orange);line-height:1;">02</div>
+          <div style="font-weight:700;margin-bottom:6px;">Apply for Financial Aid</div>
+          <div style="font-size:12px;color:var(--silver);">Complete FAFSA at <strong>fafsa.gov</strong>. School code: <strong>009159</strong>. G3 Tuition Assistance also available for eligible students.</div>
+        </div>
+        <div class="card-sm" style="border-top:3px solid var(--orange);">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--orange);line-height:1;">03</div>
+          <div style="font-weight:700;margin-bottom:6px;">Submit Transcripts</div>
+          <div style="font-size:12px;color:var(--silver);">Order official transcripts to <strong>transcripts@pdc.edu</strong> or mail to: CAMP Community College, ATTN: Registrar, 100 N College Dr., Franklin, VA 23851.</div>
+        </div>
+        <div class="card-sm" style="border-top:3px solid var(--orange);">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--orange);line-height:1;">04</div>
+          <div style="font-weight:700;margin-bottom:6px;">Meet with Advisor</div>
+          <div style="font-size:12px;color:var(--silver);">Schedule a meeting with the EMS Program Director to discuss entrance requirements, course scheduling, and register for classes.</div>
+        </div>
+        <div class="card-sm" style="border-top:3px solid var(--orange);">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--orange);line-height:1;">05</div>
+          <div style="font-weight:700;margin-bottom:6px;">Complete Health Requirements</div>
+          <div style="font-size:12px;color:var(--silver);">Submit immunization records, background check, and drug screen. Complete TB test and Hep B series if not already done.</div>
+        </div>
+        <div class="card-sm" style="border-top:3px solid var(--orange);">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--orange);line-height:1;">06</div>
+          <div style="font-weight:700;margin-bottom:6px;">Register &amp; Begin</div>
+          <div style="font-size:12px;color:var(--silver);">Complete registration for EMS courses (Note: You cannot self-register — the Program Director must authorize enrollment). Purchase required materials.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grading -->
+    <div class="card">
+      <div class="section-label">Academic Policy</div>
+      <div class="section-title" style="font-size:26px;margin-bottom:16px;">Grading System</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;">
+        <div class="stat-box"><div class="stat-val" style="color:var(--success);">A</div><div class="stat-key">90–100%</div></div>
+        <div class="stat-box"><div class="stat-val" style="color:var(--success);">B</div><div class="stat-key">80–89%</div></div>
+        <div class="stat-box"><div class="stat-val" style="color:var(--warn);">C</div><div class="stat-key">70–79%</div></div>
+        <div class="stat-box"><div class="stat-val" style="color:var(--red);">D</div><div class="stat-key">60–69%</div></div>
+        <div class="stat-box"><div class="stat-val" style="color:var(--red);">F</div><div class="stat-key">Below 60%</div></div>
+      </div>
+      <div style="margin-top:14px;padding:12px;background:rgba(239,68,68,0.06);border-radius:6px;font-size:13px;color:var(--muted);">
+        ⚠️ A minimum grade of <strong style="color:var(--warn);">75% (C or better)</strong> is required in all EMS courses to progress and remain in the program. Students falling below this threshold are subject to remediation and/or dismissal policies.
+      </div>
+    </div>
+  </div>
+
+  <!-- ████ CHECKLISTS ███████████████████████████████████ -->
+  <div id="tab-checklists" class="tab-panel">
+    <div class="section-label">Student Action Plans</div>
+    <div class="section-title">Interactive Checklists</div>
+    <div class="section-sub">Track your progress for each program. Checks are saved in your browser.</div>
+
+    <div class="checklist-tabs">
+      <button class="cl-tab active emt" onclick="switchChecklist('emt')">🟢 EMT Checklist</button>
+      <button class="cl-tab" onclick="switchChecklist('aemt')">🟠 AEMT Checklist</button>
+      <button class="cl-tab" onclick="switchChecklist('pm')">⭐ Paramedic Checklist</button>
+    </div>
+
+    <!-- EMT CHECKLIST -->
+    <div id="cl-emt" class="cl-panel active">
+      <div class="progress-bar-wrap"><div class="progress-bar" id="pb-emt" style="width:0%"></div></div>
+      <div class="progress-label" id="pl-emt">0 of 0 completed</div>
+
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--success);">📋 Before Enrollment <span class="progress-mini" id="prg-emt-0"></span></div>
+        <div id="checklist-emt-0">
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',0,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Apply online at apply.vccs.edu</div><div class="ci-note">No application fee required for VCCS</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',0,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete FAFSA at fafsa.gov</div><div class="ci-note">School code: 009159 | Also check G3 Tuition Assistance eligibility</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',0,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Submit official high school / GED transcripts</div><div class="ci-note">Send to transcripts@pdc.edu or mail to Registrar</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',0,3)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Meet with EMS Program Director / Advisor</div><div class="ci-note">Get authorized for registration — cannot self-register for EMS courses</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',0,4)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Confirm you meet the minimum age requirement (16+)</div><div class="ci-note">Valid government-issued ID required</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',0,5)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete criminal background check</div><div class="ci-note">Free through VA OEMS — required before clinical placement</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',0,6)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete drug screening</div><div class="ci-note">Urine drug panel — standard pre-enrollment requirement</div></div></div>
+        </div>
+      </div>
+
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--success);">💉 Health & Medical <span class="progress-mini" id="prg-emt-1"></span></div>
+        <div id="checklist-emt-1">
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',1,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Submit immunization documentation</div><div class="ci-note">Hep B, MMR, Varicella, Tdap, flu vaccine</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',1,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">TB test / tuberculosis screening</div><div class="ci-note">2-step PPD or IGRA blood test</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',1,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Confirm physical ability to perform EMT skills</div><div class="ci-note">Lifting, kneeling, patient contact — review technical standards</div></div></div>
+        </div>
+      </div>
+
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--success);">📚 Course Materials <span class="progress-mini" id="prg-emt-2"></span></div>
+        <div id="checklist-emt-2">
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',2,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Purchase required EMT textbook</div><div class="ci-note">AAOS Emergency Care &amp; Transport — check Canvas LMS for edition</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',2,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Set up Canvas LMS (VCCS online platform)</div><div class="ci-note">Login via vccs.edu with your student credentials</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',2,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Obtain required uniform polo & pants</div><div class="ci-note">Program-specified attire for all lab and clinical sessions</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',2,3)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Purchase stethoscope &amp; pocket tools</div><div class="ci-note">Penlight, trauma shears, gloves — recommend Littmann Classic or equivalent</div></div></div>
+        </div>
+      </div>
+
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--success);">🏥 During the Program <span class="progress-mini" id="prg-emt-3"></span></div>
+        <div id="checklist-emt-3">
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',3,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Obtain AHA BLS for Healthcare Providers certification</div><div class="ci-note">Provided in first week if not already certified</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',3,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete all required skills check-offs</div><div class="ci-note">Must pass all psychomotor competencies to sit for NREMT</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',3,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Log all clinical and field hours in tracking system</div><div class="ci-note">Minimum contact requirements must be met per CoAEMSP standards</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',3,3)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Maintain minimum 75% grade in all EMS courses</div><div class="ci-note">Below 75% triggers remediation review</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',3,4)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Attend all scheduled lab and simulation sessions</div><div class="ci-note">Attendance policy strictly enforced — see handbook for details</div></div></div>
+        </div>
+      </div>
+
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--success);">🏆 Certification & Graduation <span class="progress-mini" id="prg-emt-4"></span></div>
+        <div id="checklist-emt-4">
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',4,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Apply for NREMT cognitive exam</div><div class="ci-note">Register at nremt.org — exam fee ~$90–$110</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',4,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Pass NREMT cognitive exam</div><div class="ci-note">Adaptive examination — 70–120 questions</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',4,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete NREMT psychomotor exam (if applicable)</div><div class="ci-note">Administered by VAOEMS-approved evaluators</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',4,3)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Apply for Virginia EMS certification (VAOEMS)</div><div class="ci-note">Submit state application with NREMT results</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'emt',4,4)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Apply for graduation / certificate award</div><div class="ci-note">Submit graduation application through SIS or Registrar's office</div></div></div>
+        </div>
+      </div>
+      <button class="btn btn-ghost" onclick="resetChecklist('emt')" style="margin-top:8px;">↺ Reset EMT Checklist</button>
+    </div>
+
+    <!-- AEMT CHECKLIST -->
+    <div id="cl-aemt" class="cl-panel">
+      <div class="progress-bar-wrap"><div class="progress-bar" id="pb-aemt" style="width:0%;background:linear-gradient(90deg,var(--orange),var(--orange2))"></div></div>
+      <div class="progress-label" id="pl-aemt">0 of 0 completed</div>
+
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--orange2);">📋 Prerequisites & Enrollment <span class="progress-mini" id="prg-aemt-0"></span></div>
+        <div id="checklist-aemt-0">
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',0,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Hold current EMT certification (NREMT or Virginia)</div><div class="ci-note">Must be active and not expired</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',0,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Meet with EMS Program Director for AEMT registration</div><div class="ci-note">Director must authorize enrollment in AEMT courses</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',0,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete criminal background check (new/updated)</div><div class="ci-note">Free through VA OEMS — required for new clinical sites</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',0,3)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete drug screening</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',0,4)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Confirm minimum age of 18 years</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',0,5)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Apply / update FAFSA for current academic year</div><div class="ci-note">School code: 009159</div></div></div>
+        </div>
+      </div>
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--orange2);">💉 Health & Certifications <span class="progress-mini" id="prg-aemt-1"></span></div>
+        <div id="checklist-aemt-1">
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',1,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Current AHA BLS for Healthcare Providers card</div><div class="ci-note">Must be valid and not expired</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',1,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Update immunization documentation</div><div class="ci-note">Verify Hep B series complete, TB current</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',1,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">TB screening current within required period</div></div></div>
+        </div>
+      </div>
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--orange2);">📚 Materials & Systems <span class="progress-mini" id="prg-aemt-2"></span></div>
+        <div id="checklist-aemt-2">
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',2,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Purchase required AEMT textbooks</div><div class="ci-note">Verify edition with Program Director</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',2,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Set up Sterling Credentials (EDS/clinical tracking)</div><div class="ci-note">Required for logging all clinical contact hours — $97 per enrollment</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',2,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Update Canvas LMS access for AEMT courses</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',2,3)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Verify clinical uniform meets new site requirements</div></div></div>
+        </div>
+      </div>
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--orange2);">🏥 During the Program <span class="progress-mini" id="prg-aemt-3"></span></div>
+        <div id="checklist-aemt-3">
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',3,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete IV/IO skills check-offs in simulation lab</div><div class="ci-note">Must demonstrate competency before clinical placement</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',3,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete required hospital clinical hours</div><div class="ci-note">ED and ALS ambulance rotations — log all patient contacts</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',3,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete required ALS ambulance ride-along hours</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',3,3)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Maintain 75% minimum grade in all AEMT courses</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',3,4)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Meet with clinical coordinator to verify hour completion</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',3,5)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Demonstrate medication administration competency</div><div class="ci-note">Expanded AEMT formulary — must be verified by preceptor</div></div></div>
+        </div>
+      </div>
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--orange2);">🏆 Certification <span class="progress-mini" id="prg-aemt-4"></span></div>
+        <div id="checklist-aemt-4">
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',4,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Apply for NREMT AEMT cognitive exam</div><div class="ci-note">Register at nremt.org</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',4,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Pass NREMT AEMT exam</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',4,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Apply for Virginia AEMT certification (VAOEMS)</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',4,3)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Apply for graduation / Career Studies Certificate</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'aemt',4,4)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Explore advanced standing into Paramedic program</div><div class="ci-note">AEMT certification grants 11 credits + placement into Paramedic</div></div></div>
+        </div>
+      </div>
+      <button class="btn btn-ghost" onclick="resetChecklist('aemt')" style="margin-top:8px;">↺ Reset AEMT Checklist</button>
+    </div>
+
+    <!-- PARAMEDIC CHECKLIST -->
+    <div id="cl-pm" class="cl-panel">
+      <div class="progress-bar-wrap"><div class="progress-bar" id="pb-pm" style="width:0%;background:linear-gradient(90deg,var(--gold),var(--orange2))"></div></div>
+      <div class="progress-label" id="pl-pm">0 of 0 completed</div>
+
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--gold);">📋 Prerequisites & Enrollment <span class="progress-mini" id="prg-pm-0"></span></div>
+        <div id="checklist-pm-0">
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',0,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Hold current EMT certification</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',0,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Hold current AEMT certification (or advanced standing proof)</div><div class="ci-note">NREMT or Virginia AEMT required for entry</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',0,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Meet with EMS Program Director for Paramedic registration</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',0,3)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete updated criminal background check</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',0,4)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete updated drug screening</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',0,5)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Apply / update FAFSA for current year</div></div></div>
+        </div>
+      </div>
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--gold);">💉 Health & Advanced Certifications <span class="progress-mini" id="prg-pm-1"></span></div>
+        <div id="checklist-pm-1">
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',1,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Current AHA BLS for Healthcare Providers</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',1,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Obtain AHA ACLS Certification</div><div class="ci-note">Advanced Cardiac Life Support — typically obtained during program</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',1,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Obtain AHA PALS Certification</div><div class="ci-note">Pediatric Advanced Life Support — typically obtained during program</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',1,3)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete all immunization requirements (current)</div><div class="ci-note">All clinical sites require full immunization records</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',1,4)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Current TB screening documentation</div></div></div>
+        </div>
+      </div>
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--gold);">📚 Materials & Preparation <span class="progress-mini" id="prg-pm-2"></span></div>
+        <div id="checklist-pm-2">
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',2,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Obtain Sanders' Paramedic Textbook 6th Edition</div><div class="ci-note">Primary course reference — verify edition requirement</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',2,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Set up Sterling Credentials (EDS/clinical tracking)</div><div class="ci-note">Required for logging 1,500+ clinical hours — $144 per enrollment</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',2,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Purchase quality stethoscope (Cardiology III or equivalent)</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',2,3)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Obtain ECG reference materials / 12-lead resources</div><div class="ci-note">12-lead ECG app, pocket reference cards</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',2,4)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Download Canvas LMS app and set up notifications</div></div></div>
+        </div>
+      </div>
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--gold);">🏥 Clinical & Field Experience <span class="progress-mini" id="prg-pm-3"></span></div>
+        <div id="checklist-pm-3">
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',3,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete all required ED rotations (Sentara/partner hospitals)</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',3,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete ICU / critical care rotation hours</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',3,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete labor &amp; delivery / OB rotation</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',3,3)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete pediatric / NICU rotation</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',3,4)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Complete ALS field internship hours (paramedic unit)</div><div class="ci-note">Including Suffolk Fire &amp; Rescue and partner agencies</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',3,5)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Achieve team leader designation in field internship</div><div class="ci-note">Must demonstrate ability to independently manage ALS calls</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',3,6)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Log all patient contacts with required intervention data</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',3,7)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Maintain ongoing 75% or higher in all courses</div></div></div>
+        </div>
+      </div>
+      <div class="cl-section">
+        <div class="cl-section-title" style="color:var(--gold);">🏆 Certification & Career <span class="progress-mini" id="prg-pm-4"></span></div>
+        <div id="checklist-pm-4">
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',4,0)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Apply for NREMT Paramedic (NRP) cognitive exam</div><div class="ci-note">Register at nremt.org — adaptive CAT exam</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',4,1)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Pass NREMT NRP cognitive exam</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',4,2)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Apply for Virginia Paramedic certification (VAOEMS)</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',4,3)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Apply for graduation / Paramedic Certificate award</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',4,4)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Meet with Career Services for job placement support</div></div></div>
+          <div class="checklist-item" onclick="toggleCheck(this,'pm',4,5)"><div class="ci-box"><span class="ci-check">✓</span></div><div class="ci-content"><div class="ci-label">Consider AAS Degree continuation (65 total credits)</div><div class="ci-note">Adds general education requirements for full Associate's Degree</div></div></div>
+        </div>
+      </div>
+      <button class="btn btn-ghost" onclick="resetChecklist('pm')" style="margin-top:8px;">↺ Reset Paramedic Checklist</button>
+    </div>
+  </div>
+
+  <!-- ████ ANNOUNCEMENTS ████████████████████████████████ -->
+  <div id="tab-announcements" class="tab-panel">
+    <div class="section-label">Program Updates</div>
+    <div class="section-title">Announcements</div>
+    <div class="section-sub">Important notices from the EMS Program Office</div>
+    <div id="announcement-list">
+      <!-- Default announcements -->
+      <div class="announcement-card">
+        <div class="announcement-meta">
+          <span class="ann-date">Feb 2026</span>
+          <span class="ann-tag info">Program Info</span>
+        </div>
+        <div class="ann-title">Welcome to the CAMP EMS Student Portal!</div>
+        <div class="ann-body">This portal provides program requirements, cost breakdowns, interactive checklists, and program updates for all CAMP EMS students. Bookmark this page and check the Announcements tab regularly for important updates from the Program Office.</div>
+        <div class="ann-author">— Dr. Carlos Cajares, DHSc, MPA, NRP | EMS Program Director</div>
+      </div>
+      <div class="announcement-card">
+        <div class="announcement-meta">
+          <span class="ann-date">Feb 2026</span>
+          <span class="ann-tag gold" style="background:rgba(255,183,3,0.15);color:var(--gold);">Distinction</span>
+        </div>
+        <div class="ann-title">CAMP EMS — Virginia's Only Dual CoAEMSP LOR Program</div>
+        <div class="ann-body">We are proud to be Virginia's ONLY EMS program holding CoAEMSP Letters of Review for both our AEMT and Paramedic programs. This distinction demonstrates our commitment to accreditation excellence and the highest standards in EMS education.</div>
+        <div class="ann-author">— CAMP EMS Program Office</div>
+      </div>
+    </div>
+    <div id="admin-announcements-list"></div>
+  </div>
+
+  <!-- ████ RESOURCES & FAQ ██████████████████████████████ -->
+  <div id="tab-resources" class="tab-panel">
+    <div class="section-label">Information Center</div>
+    <div class="section-title">Resources & FAQ</div>
+    <div class="section-sub">Frequently asked questions, contact information, and useful links</div>
+
+    <!-- Contact Info -->
+    <div class="card" style="margin-bottom:20px;">
+      <div class="section-label">Contact</div>
+      <div class="section-title" style="font-size:22px;margin-bottom:16px;">Program Office</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
+        <div class="card-sm">
+          <div style="font-size:20px;margin-bottom:8px;">👨‍⚕️</div>
+          <div style="font-weight:700;margin-bottom:4px;">Dr. Carlos Cajares, DHSc, MPA, NRP</div>
+          <div style="font-size:13px;color:var(--silver);">EMS Program Director</div>
+          <div style="font-size:12px;color:var(--silver);margin-top:6px;">CAMP Community College</div>
+        </div>
+        <div class="card-sm">
+          <div style="font-size:20px;margin-bottom:8px;">🏫</div>
+          <div style="font-weight:700;margin-bottom:4px;">Campus Locations</div>
+          <div style="font-size:13px;color:var(--silver);">Suffolk — Hobbs Campus</div>
+          <div style="font-size:13px;color:var(--silver);">Franklin — Main / WDC</div>
+          <div style="font-size:13px;color:var(--silver);">Smithfield Campus</div>
+        </div>
+        <div class="card-sm">
+          <div style="font-size:20px;margin-bottom:8px;">📧</div>
+          <div style="font-weight:700;margin-bottom:4px;">Transcripts</div>
+          <div style="font-size:13px;color:var(--silver);">transcripts@pdc.edu</div>
+          <div style="font-size:13px;color:var(--silver);margin-top:4px;">Or mail to:<br/>100 N College Dr.<br/>Franklin, VA 23851</div>
+        </div>
+        <div class="card-sm">
+          <div style="font-size:20px;margin-bottom:8px;">🌐</div>
+          <div style="font-weight:700;margin-bottom:4px;">Key Links</div>
+          <div style="font-size:13px;color:var(--silver);">apply.vccs.edu — Apply</div>
+          <div style="font-size:13px;color:var(--silver);">fafsa.gov — Financial Aid</div>
+          <div style="font-size:13px;color:var(--silver);">nremt.org — NREMT Exams</div>
+          <div style="font-size:13px;color:var(--silver);">FAFSA Code: <strong>009159</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="section-label">Frequently Asked Questions</div>
+    <div class="section-title" style="font-size:22px;margin-bottom:16px;">FAQ</div>
+
+    <div class="accordion-item"><button class="accordion-head" onclick="toggleAcc(this)">What is the minimum grade required to pass EMS courses? <span class="arrow">▼</span></button><div class="accordion-body"><p>All EMS courses require a minimum grade of <strong>75%</strong> to progress in the program. Students who fall below this threshold are subject to the remediation policy. A grade of 75% or higher must be maintained to remain enrolled and advance to the next course in the sequence.</p></div></div>
+
+    <div class="accordion-item"><button class="accordion-head" onclick="toggleAcc(this)">Can I register for EMS courses myself through SIS? <span class="arrow">▼</span></button><div class="accordion-body"><p>No. EMS courses at CAMP Community College require authorization from the EMS Program Director. You must meet with Dr. Cajares before you can be enrolled in any EMS course. Contact the Program Office to schedule your advising appointment.</p></div></div>
+
+    <div class="accordion-item"><button class="accordion-head" onclick="toggleAcc(this)">What is the G3 Tuition Assistance program? <span class="arrow">▼</span></button><div class="accordion-body"><p>G3 (Get Skilled, Get a Job, Give Back) is a Virginia statewide tuition assistance program for community college students enrolled in high-demand workforce programs — including EMS. Eligible students may receive assistance covering the cost of tuition after other financial aid is applied. Contact Financial Aid or the EMS Program Office to determine your eligibility.</p></div></div>
+
+    <div class="accordion-item"><button class="accordion-head" onclick="toggleAcc(this)">What is an CoAEMSP Letter of Review (LOR) and why does it matter? <span class="arrow">▼</span></button><div class="accordion-body"><p>The Committee on Accreditation of Educational Programs for the EMS Professions (CoAEMSP) issues Letters of Review as a step toward full CAAHEP accreditation. CAMP Community College holds LORs for both AEMT and Paramedic programs — the only Virginia EMS program with this distinction. Graduates of LOR-approved programs are eligible to sit for NREMT certification exams and state licensure, and employers recognize the quality standards this represents.</p></div></div>
+
+    <div class="accordion-item"><button class="accordion-head" onclick="toggleAcc(this)">I'm already a certified AEMT — can I skip ahead? <span class="arrow">▼</span></button><div class="accordion-body"><p>Yes! Students who hold a current NREMT or Virginia AEMT certification receive 11 credits and advanced placement directly into the Paramedic program. This is a significant benefit that recognizes your prior learning and experience. Contact the Program Director to initiate the advanced standing process.</p></div></div>
+
+    <div class="accordion-item"><button class="accordion-head" onclick="toggleAcc(this)">What clinical sites are used for the EMS programs? <span class="arrow">▼</span></button><div class="accordion-body"><p>Clinical placements include regional EMS agencies and hospital partners throughout the Hampton Roads area, including <strong>Suffolk Fire &amp; Rescue</strong>, <strong>Sentara Obici Hospital</strong>, and other partner agencies. ALS transport agencies, emergency departments, and specialty units (ICU, L&amp;D, pediatrics) are used for Paramedic-level clinical hours. All sites are coordinated through the Clinical Coordinator under the direction of the Program Director.</p></div></div>
+
+    <div class="accordion-item"><button class="accordion-head" onclick="toggleAcc(this)">What immunizations do I need before starting? <span class="arrow">▼</span></button><div class="accordion-body"><p>Required immunizations include: Hepatitis B series (3-dose), MMR (Measles, Mumps, Rubella), Varicella (Chickenpox), Tdap (Tetanus, Diphtheria, Pertussis), annual influenza vaccine, and a current TB screening (2-step PPD or IGRA). Documentation of all immunizations must be submitted before clinical placement. Students should contact their healthcare provider or the local health department to obtain any missing vaccines.</p></div></div>
+
+    <div class="accordion-item"><button class="accordion-head" onclick="toggleAcc(this)">How do I apply for the NREMT exam after completing my program? <span class="arrow">▼</span></button><div class="accordion-body"><p>After completing all program requirements and receiving a program completion letter from the Program Director, you can apply for the NREMT certification exam at <strong>nremt.org</strong>. The Program Director submits your completion status to NREMT, after which you will receive authorization to test (ATT). You then schedule your exam at a Pearson VUE testing center. After passing, you apply to VAOEMS for your Virginia state certification.</p></div></div>
+
+    <div class="accordion-item"><button class="accordion-head" onclick="toggleAcc(this)">What is the Credit for Prior Learning (CPL) policy? <span class="arrow">▼</span></button><div class="accordion-body"><p>Current EMS professionals may receive academic credit for existing certifications and experience through CAMP's Credit for Prior Learning policy. This may include credits awarded for active NREMT certifications, documented field experience, or completed EMS training programs. Contact the Program Director and Registrar's office for specific CPL evaluation procedures.</p></div></div>
+
+    <div class="accordion-item"><button class="accordion-head" onclick="toggleAcc(this)">Is there financial assistance beyond FAFSA? <span class="arrow">▼</span></button><div class="accordion-body"><p>Yes. Beyond FAFSA, students may qualify for: <strong>G3 Tuition Assistance</strong> (workforce program aid), <strong>workforce development grants</strong>, <strong>agency-sponsored training</strong> (some EMS agencies pay tuition for employees/volunteers), and <strong>scholarship programs</strong>. Contact Financial Aid and Career Services to explore all options. Some students are also sponsored through agency partnership contracts (e.g., the Norfolk Fire-Rescue AEMT-to-Paramedic program).</p></div></div>
+  </div>
+
+  <!-- ████ ADMIN ████████████████████████████████████████ -->
+  <div id="tab-admin" class="tab-panel">
+
+    <!-- LOGIN GATE -->
+    <div id="admin-login" class="admin-gate">
+      <div class="admin-lock">🔐</div>
+      <div class="section-title" style="margin-bottom:8px;">Admin Access</div>
+      <div style="font-size:14px;color:var(--silver);margin-bottom:24px;">EMS Program Director only. Enter your admin password to continue.</div>
+      <div class="admin-form-wrap">
+        <div class="form-group">
+          <label class="form-label">Admin Password</label>
+          <input type="password" class="form-input" id="admin-pw-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')tryLogin()"/>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="tryLogin()">Unlock Admin Panel</button>
+        <div class="error-msg" id="login-error">Incorrect password. Please try again.</div>
+      </div>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div id="admin-panel" class="admin-panel">
+      <div class="admin-header">
+        <div>
+          <div class="admin-title">⚙️ Admin Panel</div>
+          <div class="admin-subtitle">EMS Program Director Dashboard — CAMP Community College</div>
+        </div>
+        <button class="btn btn-ghost" onclick="logout()" style="flex-shrink:0;">🔓 Log Out</button>
+      </div>
+
+      <div class="admin-grid">
+        <!-- Post Announcement -->
+        <div class="card" style="border-top:3px solid var(--orange);">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--orange2);margin-bottom:16px;">📢 Post New Announcement</div>
+          <div class="form-group">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-input" id="ann-title-input" placeholder="Announcement title..."/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message / Body</label>
+            <textarea class="form-textarea" id="ann-body-input" placeholder="Write your announcement here..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tag / Category</label>
+            <select class="form-select" id="ann-tag-input">
+              <option value="general">General</option>
+              <option value="info">Program Info</option>
+              <option value="important">Important</option>
+              <option value="urgent">Urgent</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Author</label>
+            <input type="text" class="form-input" id="ann-author-input" value="Dr. Carlos Cajares, DHSc, MPA, NRP — EMS Program Director"/>
+          </div>
+          <button class="btn btn-primary btn-full" onclick="postAnnouncement()">Post Announcement</button>
+          <div class="success-msg" id="post-success">Announcement posted successfully!</div>
+        </div>
+
+        <!-- Manage Existing -->
+        <div class="card" style="border-top:3px solid var(--navy3);">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--silver);margin-bottom:8px;">📋 Manage Announcements</div>
+          <div style="font-size:13px;color:var(--silver);margin-bottom:14px;">Posted announcements (admin-created only). Default program announcements cannot be deleted.</div>
+          <div id="admin-manage-list">
+            <div style="font-size:13px;color:var(--silver);text-align:center;padding:20px;">No custom announcements posted yet.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info Card for Admin -->
+      <div class="card" style="margin-top:20px;border:1px solid rgba(255,183,3,0.3);">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gold);margin-bottom:10px;">📌 Admin Notes</div>
+        <ul class="detail-list">
+          <li>Announcements are stored in <strong>Google Sheets</strong> and are visible to <strong>all students</strong> regardless of device or browser.</li>
+          <li>After posting, the portal re-fetches from Sheets automatically — allow 1–2 seconds for it to appear.</li>
+          <li>Default program announcements are built into the page and cannot be deleted here.</li>
+          <li>To manage your Sheet directly, go to <strong>Google Sheets → CAMP EMS Announcements</strong>. You can edit or delete rows there as well.</li>
+          <li>To change your admin password, open the HTML file in a text editor and find the <code style="color:var(--orange);background:rgba(232,93,4,0.1);padding:1px 6px;border-radius:4px;">ADMIN_PW</code> variable.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+<!-- ══ EDIT MODAL ════════════════════════════════════ -->
+<div class="modal-overlay" id="edit-modal" onclick="handleModalClick(event)">
+  <div class="modal-box">
+    <div class="modal-title">
+      ✏️ Edit Announcement
+      <button class="modal-close" onclick="closeEditModal()">✕</button>
+    </div>
+    <input type="hidden" id="edit-ann-id"/>
+    <div class="form-group">
+      <label class="form-label">Title</label>
+      <input type="text" class="form-input" id="edit-ann-title" placeholder="Announcement title..."/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Message / Body</label>
+      <textarea class="form-textarea" id="edit-ann-body" placeholder="Write your announcement here..." style="min-height:120px;"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tag / Category</label>
+      <select class="form-select" id="edit-ann-tag">
+        <option value="general">General</option>
+        <option value="info">Program Info</option>
+        <option value="important">Important</option>
+        <option value="urgent">Urgent</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Author</label>
+      <input type="text" class="form-input" id="edit-ann-author"/>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="edit-save-btn" onclick="saveEdit()" style="flex:1;">💾 Save Changes</button>
+      <button class="btn btn-ghost" onclick="closeEditModal()">Cancel</button>
+    </div>
+    <div class="success-msg" id="edit-success" style="margin-top:12px;">Changes saved successfully!</div>
+  </div>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-text">
+    <strong>CAMP Community College — EMS Program</strong><br/>
+    100 N College Dr., Franklin, VA 23851 | transcripts@pdc.edu<br/>
+    <a href="https://apply.vccs.edu" target="_blank">apply.vccs.edu</a> &nbsp;|&nbsp;
+    <a href="https://www.fafsa.gov" target="_blank">FAFSA: fafsa.gov (Code: 009159)</a> &nbsp;|&nbsp;
+    <a href="https://www.nremt.org" target="_blank">nremt.org</a><br/><br/>
+    <span class="lor-badge">🏅 CoAEMSP LOR — AEMT</span>
+    <span class="lor-badge">🏅 CoAEMSP LOR — Paramedic</span>
+    <span class="lor-badge">✓ VCCS Accredited</span>
+    <br/><br/>
+    <span style="font-size:11px;color:#64748b;">© 2026 CAMP Community College EMS Program. Rev 2.6 | Student Portal v1.0</span>
+  </div>
+</footer>
+
+<script>
+// ── ADMIN PASSWORD ──────────────────────────────────
+const ADMIN_PW = 'CAMPEMS06302025';
+
+// ── TAB SWITCHING ───────────────────────────────────
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.mobile-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  // Sync desktop nav
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    if(b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) b.classList.add('active');
+  });
+  // Sync mobile nav
+  const mob = document.getElementById('mob-btn-' + id);
+  if(mob) mob.classList.add('active');
+  // Scroll to top on mobile
+  if(window.innerWidth <= 640) window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── MOBILE NAV ──────────────────────────────────────
+function toggleMobileNav() {
+  const drawer  = document.getElementById('mobile-nav-drawer');
+  const overlay = document.getElementById('mobile-nav-overlay');
+  const btn     = document.getElementById('hamburger-btn');
+  const isOpen  = drawer.classList.contains('open');
+  if(isOpen) {
+    closeMobileNav();
+  } else {
+    drawer.classList.add('open');
+    overlay.style.display = 'block';
+    setTimeout(() => overlay.classList.add('open'), 10);
+    btn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeMobileNav() {
+  const drawer  = document.getElementById('mobile-nav-drawer');
+  const overlay = document.getElementById('mobile-nav-overlay');
+  const btn     = document.getElementById('hamburger-btn');
+  drawer.classList.remove('open');
+  overlay.classList.remove('open');
+  btn.classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(() => { overlay.style.display = 'none'; }, 300);
+}
+
+// Close drawer on Escape key
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeMobileNav(); });
+
+// ── ACCORDION ───────────────────────────────────────
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const arrow = btn.querySelector('.arrow');
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.accordion-body').forEach(b => { b.classList.remove('open'); b.previousElementSibling.querySelector('.arrow').style.transform = ''; });
+  if(!isOpen) { body.classList.add('open'); arrow.style.transform = 'rotate(180deg)'; }
+}
+
+// ── CHECKLIST LOGIC ─────────────────────────────────
+function getChecklistKey(prog) { return 'camp_ems_checklist_' + prog; }
+
+function loadChecklists() {
+  ['emt','aemt','pm'].forEach(prog => {
+    const data = JSON.parse(localStorage.getItem(getChecklistKey(prog)) || '{}');
+    const items = document.querySelectorAll('#cl-' + prog + ' .checklist-item');
+    items.forEach((item, idx) => {
+      if(data[idx]) {
+        item.classList.add('checked');
+        item.querySelector('.ci-box').style.background = 'var(--success)';
+        item.querySelector('.ci-box').style.borderColor = 'var(--success)';
+        item.querySelector('.ci-check').style.display = 'block';
+      }
+    });
+    updateProgress(prog);
+  });
+}
+
+function toggleCheck(item, prog, section, idx) {
+  const data = JSON.parse(localStorage.getItem(getChecklistKey(prog)) || '{}');
+  const key = section + '_' + idx;
+  const checked = item.classList.toggle('checked');
+  const box = item.querySelector('.ci-box');
+  const chk = item.querySelector('.ci-check');
+  if(checked) {
+    box.style.background = 'var(--success)';
+    box.style.borderColor = 'var(--success)';
+    chk.style.display = 'block';
+    data[key] = true;
+  } else {
+    box.style.background = '';
+    box.style.borderColor = '';
+    chk.style.display = 'none';
+    delete data[key];
+  }
+  localStorage.setItem(getChecklistKey(prog), JSON.stringify(data));
+  updateProgress(prog);
+}
+
+function updateProgress(prog) {
+  const items = document.querySelectorAll('#cl-' + prog + ' .checklist-item');
+  const total = items.length;
+  const done = document.querySelectorAll('#cl-' + prog + ' .checklist-item.checked').length;
+  const pct = total > 0 ? Math.round((done/total)*100) : 0;
+  const pb = document.getElementById('pb-' + prog);
+  const pl = document.getElementById('pl-' + prog);
+  if(pb) pb.style.width = pct + '%';
+  if(pl) pl.textContent = done + ' of ' + total + ' completed (' + pct + '%)';
+  // Per-section mini progress
+  const sections = document.querySelectorAll('#cl-' + prog + ' .cl-section');
+  sections.forEach((sec, idx) => {
+    const secItems = sec.querySelectorAll('.checklist-item');
+    const secDone = sec.querySelectorAll('.checklist-item.checked').length;
+    const prg = document.getElementById('prg-' + prog + '-' + idx);
+    if(prg) prg.textContent = secDone + '/' + secItems.length;
+  });
+}
+
+function switchChecklist(prog) {
+  document.querySelectorAll('.cl-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.cl-tab').forEach(b => b.classList.remove('active','emt','aemt','pm'));
+  document.getElementById('cl-' + prog).classList.add('active');
+  const tabs = document.querySelectorAll('.cl-tab');
+  tabs.forEach(t => { if(t.getAttribute('onclick') && t.getAttribute('onclick').includes("'" + prog + "'")) { t.classList.add('active', prog); }});
+}
+
+function resetChecklist(prog) {
+  if(!confirm('Reset all ' + prog.toUpperCase() + ' checklist items?')) return;
+  localStorage.removeItem(getChecklistKey(prog));
+  document.querySelectorAll('#cl-' + prog + ' .checklist-item').forEach(item => {
+    item.classList.remove('checked');
+    item.querySelector('.ci-box').style.background = '';
+    item.querySelector('.ci-box').style.borderColor = '';
+    item.querySelector('.ci-check').style.display = 'none';
+  });
+  updateProgress(prog);
+}
+
+// ── ADMIN AUTH ───────────────────────────────────────
+function tryLogin() {
+  const val = document.getElementById('admin-pw-input').value;
+  const err = document.getElementById('login-error');
+  if(val === ADMIN_PW) {
+    document.getElementById('admin-login').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    err.style.display = 'none';
+    fetchAnnouncements();
+  } else {
+    err.style.display = 'block';
+    document.getElementById('admin-pw-input').value = '';
+    document.getElementById('admin-pw-input').focus();
+  }
+}
+
+function logout() {
+  document.getElementById('admin-login').style.display = 'block';
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('admin-pw-input').value = '';
+}
+
+// ── GOOGLE SHEETS API ────────────────────────────────
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwgZH8rYhXogjlP9oT9gB_agWpnGXIzH6ZjorWmZ0nl_U0zmlDYNeCEXsnxrFoWB9zk2Q/exec';
+const tagClasses = { urgent:'urgent', info:'info', important:'important', general:'general' };
+
+let cachedAnnouncements = [];
+
+function showAnnLoading(msg) {
+  const el = document.getElementById('admin-announcements-list');
+  if(el) el.innerHTML = `<div style="text-align:center;padding:30px;font-size:13px;color:var(--silver);">${msg}</div>`;
+}
+
+async function fetchAnnouncements() {
+  showAnnLoading('⏳ Loading announcements...');
+  try {
+    const res = await fetch(SHEETS_URL);
+    const data = await res.json();
+    cachedAnnouncements = Array.isArray(data) ? data.reverse() : [];
+    renderPublicAnnouncements();
+    renderAdminManage();
+  } catch(err) {
+    cachedAnnouncements = [];
+    showAnnLoading('⚠️ Could not load announcements. Check your connection.');
+  }
+}
+
+async function postAnnouncement() {
+  const title  = document.getElementById('ann-title-input').value.trim();
+  const body   = document.getElementById('ann-body-input').value.trim();
+  const tag    = document.getElementById('ann-tag-input').value;
+  const author = document.getElementById('ann-author-input').value.trim();
+  if(!title || !body) { alert('Please enter both a title and message.'); return; }
+
+  const btn = document.querySelector('#admin-panel .btn-primary');
+  btn.textContent = 'Posting...';
+  btn.disabled = true;
+
+  const ann = {
+    action: 'add',
+    id: Date.now(),
+    date: new Date().toLocaleDateString('en-US',{year:'numeric',month:'short'}),
+    title, body, tag, author
+  };
+
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(ann)
+    });
+    document.getElementById('ann-title-input').value = '';
+    document.getElementById('ann-body-input').value = '';
+    document.getElementById('ann-tag-input').value = 'general';
+    const s = document.getElementById('post-success');
+    s.style.display = 'block';
+    setTimeout(() => s.style.display = 'none', 3000);
+    // Allow Sheets write to settle then re-fetch
+    setTimeout(() => fetchAnnouncements(), 1500);
+  } catch(err) {
+    alert('Error posting announcement. Check your connection and try again.');
+  } finally {
+    btn.textContent = 'Post Announcement';
+    btn.disabled = false;
+  }
+}
+
+async function deleteAnnouncement(id) {
+  if(!confirm('Delete this announcement?')) return;
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'delete', id: String(id) })
+    });
+    setTimeout(() => fetchAnnouncements(), 1500);
+  } catch(err) {
+    alert('Error deleting announcement. Try again.');
+  }
+}
+
+function renderPublicAnnouncements() {
+  const el = document.getElementById('admin-announcements-list');
+  if(!el) return;
+  if(cachedAnnouncements.length === 0) { el.innerHTML = ''; return; }
+  el.innerHTML = cachedAnnouncements.map(a => `
+    <div class="announcement-card">
+      <div class="announcement-meta">
+        <span class="ann-date">${escHtml(String(a.date))}</span>
+        <span class="ann-tag ${tagClasses[a.tag] || 'general'}">${capitalize(String(a.tag))}</span>
+      </div>
+      <div class="ann-title">${escHtml(String(a.title))}</div>
+      <div class="ann-body">${escHtml(String(a.body))}</div>
+      <div class="ann-author">— ${escHtml(String(a.author))}</div>
+    </div>
+  `).join('');
+}
+
+function renderAdminManage() {
+  const el = document.getElementById('admin-manage-list');
+  if(!el) return;
+  if(cachedAnnouncements.length === 0) {
+    el.innerHTML = '<div style="font-size:13px;color:var(--silver);text-align:center;padding:20px;">No announcements posted yet.</div>';
+    return;
+  }
+  el.innerHTML = cachedAnnouncements.map(a => `
+    <div class="ann-admin-item">
+      <div class="ann-admin-content">
+        <div class="ann-admin-title">${escHtml(String(a.title))}</div>
+        <div class="ann-admin-meta">${escHtml(String(a.date))} · <span class="ann-tag ${tagClasses[a.tag] || 'general'}" style="padding:1px 8px;font-size:9px;">${capitalize(String(a.tag))}</span></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-shrink:0;">
+        <button class="btn btn-ghost" style="padding:6px 14px;font-size:12px;" onclick="openEditModal(${a.id})">✏️ Edit</button>
+        <button class="btn btn-danger" style="padding:6px 14px;font-size:12px;" onclick="deleteAnnouncement(${a.id})">🗑 Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── EDIT MODAL FUNCTIONS ─────────────────────────────
+function openEditModal(id) {
+  const ann = cachedAnnouncements.find(a => String(a.id) === String(id));
+  if(!ann) return;
+  document.getElementById('edit-ann-id').value    = ann.id;
+  document.getElementById('edit-ann-title').value  = ann.title;
+  document.getElementById('edit-ann-body').value   = ann.body;
+  document.getElementById('edit-ann-tag').value    = ann.tag;
+  document.getElementById('edit-ann-author').value = ann.author;
+  document.getElementById('edit-success').style.display = 'none';
+  document.getElementById('edit-modal').classList.add('open');
+}
+
+function closeEditModal() {
+  document.getElementById('edit-modal').classList.remove('open');
+}
+
+function handleModalClick(e) {
+  if(e.target === document.getElementById('edit-modal')) closeEditModal();
+}
+
+async function saveEdit() {
+  const id     = document.getElementById('edit-ann-id').value;
+  const title  = document.getElementById('edit-ann-title').value.trim();
+  const body   = document.getElementById('edit-ann-body').value.trim();
+  const tag    = document.getElementById('edit-ann-tag').value;
+  const author = document.getElementById('edit-ann-author').value.trim();
+  if(!title || !body) { alert('Title and message cannot be empty.'); return; }
+
+  const orig = cachedAnnouncements.find(a => String(a.id) === String(id));
+  const btn  = document.getElementById('edit-save-btn');
+  btn.textContent = 'Saving...';
+  btn.disabled = true;
+
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'update',
+        id: String(id),
+        date: orig ? orig.date : new Date().toLocaleDateString('en-US',{year:'numeric',month:'short'}),
+        title, body, tag, author
+      })
+    });
+    const s = document.getElementById('edit-success');
+    s.style.display = 'block';
+    setTimeout(() => { closeEditModal(); fetchAnnouncements(); }, 1500);
+  } catch(err) {
+    alert('Error saving changes. Check your connection and try again.');
+  } finally {
+    btn.textContent = '💾 Save Changes';
+    btn.disabled = false;
+  }
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+// ── INIT ────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  loadChecklists();
+  fetchAnnouncements();
+  ['emt','aemt','pm'].forEach(p => updateProgress(p));
+});
+</script>
+</body>
+</html>
